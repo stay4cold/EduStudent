@@ -1,8 +1,6 @@
 package com.suggee.edustudent.base.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 
 /**
  * Author:  wangchenghao
@@ -13,27 +11,36 @@ import android.view.View;
  */
 public abstract class BaseLazyFragment extends BaseFragment {
 
-    private boolean mViewInited;
+    /**
+     * fragment lazy load
+     */
+    private boolean mIsPrepared = false;
+    private boolean mIsFirstVisible = true;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mIsPrepared = true;
+        initPrepare();
     }
 
+    /**
+     * ViewPager通过此来设置Fragment的显示和隐藏
+     *
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            initView();
+        if (isVisibleToUser) {
+            initPrepare();
         }
     }
 
-    private void initView() {
-        if (mViewInited) {
+    private void initPrepare() {
+        if (mIsPrepared && getUserVisibleHint() && mIsFirstVisible) {
+            mIsFirstVisible = false;
             lazyLoad();
-        } else {
-            mViewInited = false;
         }
     }
 
