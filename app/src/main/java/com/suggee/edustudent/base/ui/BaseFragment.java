@@ -49,7 +49,12 @@ public abstract class BaseFragment extends AppBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+        View view;
+        if (getContentViewLayoutID() != 0) {
+            view = inflater.inflate(getContentViewLayoutID(), null);
+        } else {
+            view = super.onCreateView(inflater, container, savedInstanceState);
+        }
         mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
