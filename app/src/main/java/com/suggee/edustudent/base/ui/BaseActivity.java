@@ -49,6 +49,25 @@ public abstract class BaseActivity extends AppBaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        registerNetConnect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterNetConnect();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unSubscribe();
+    }
+
+    /**
+     * 订阅监听网络状态变化
+     */
+    private void registerNetConnect() {
         mNetConnectSubscription = mReactiveNetwork.observeNetworkConnectivity(getApplicationContext())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,21 +83,14 @@ public abstract class BaseActivity extends AppBaseActivity {
                 });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    /**
+     * 取消订阅网络状态变化
+     */
+    private void unregisterNetConnect() {
         if (mNetConnectSubscription != null && !mNetConnectSubscription.isUnsubscribed()) {
             mNetConnectSubscription.unsubscribe();
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        unSubscribe();
-    }
-
 
     /**
      * 添加RX绑定

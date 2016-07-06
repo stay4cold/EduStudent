@@ -68,6 +68,34 @@ public abstract class BaseFragment extends AppBaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+        registerNetConnect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unregisterNetConnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unSubscribe();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //ButterKnife将View进行解绑
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
+    }
+
+    /**
+     * 订阅监听网络状态变化
+     */
+    private void registerNetConnect() {
         mNetConnectSubscription = mReactiveNetwork.observeNetworkConnectivity(getContext().getApplicationContext())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,26 +111,12 @@ public abstract class BaseFragment extends AppBaseFragment {
                 });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
+    /**
+     * 取消订阅网络状态变化
+     */
+    private void unregisterNetConnect() {
         if (mNetConnectSubscription != null && !mNetConnectSubscription.isUnsubscribed()) {
             mNetConnectSubscription.unsubscribe();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unSubscribe();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //ButterKnife将View进行解绑
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
         }
     }
 
