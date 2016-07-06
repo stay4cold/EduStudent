@@ -137,7 +137,7 @@ public abstract class BaseFragment extends AppBaseFragment {
      * 解除RX绑定
      */
     protected void unSubscribe() {
-        if (this.mCompositeSubscription != null && !this.mCompositeSubscription.isUnsubscribed()) {
+        if (this.mCompositeSubscription != null) {
             this.mCompositeSubscription.unsubscribe();
         }
     }

@@ -113,7 +113,7 @@ public abstract class BaseActivity extends AppBaseActivity {
      * 解除RX绑定
      */
     protected void unSubscribe() {
-        if (this.mCompositeSubscription != null && !this.mCompositeSubscription.isUnsubscribed()) {
+        if (this.mCompositeSubscription != null) {
             this.mCompositeSubscription.unsubscribe();
         }
     }
