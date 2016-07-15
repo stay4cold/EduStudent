@@ -1,7 +1,4 @@
 <resources>
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-    </style>
 
     <style name="AppTheme" parent="BaseTheme">
         <item name="spbStyle">@style/SmoothProgressBar</item>
