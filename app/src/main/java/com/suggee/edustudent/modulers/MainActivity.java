@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,10 +27,9 @@ import android.widget.TextView;
 import com.github.pwittchen.reactivenetwork.library.ConnectivityStatus;
 import com.suggee.edustudent.R;
 import com.suggee.edustudent.base.loading.LoadingViewController;
-import com.suggee.edustudent.base.paginate.Paginate;
-import com.suggee.edustudent.base.paginate.State;
 import com.suggee.edustudent.base.rx.RxBus;
-import com.suggee.edustudent.base.ui.BaseActivity;
+import com.suggee.edustudent.base.ui.activity.BaseActivity;
+import com.suggee.edustudent.bean.OauthUser;
 import com.suggee.edustudent.event.NetChangedEvent;
 
 import java.io.File;
@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity
@@ -53,7 +54,6 @@ public class MainActivity extends BaseActivity
 
     private ArrayList<String> mDataList = new ArrayList<>();
     private DataAdapter mAdapter;
-    private Paginate mpage;
     int a = 1;
 
     int b = 0;
@@ -64,40 +64,18 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        OauthUser user = Realm.getDefaultInstance().where(OauthUser.class).equalTo("logined", true).findFirst();
+        Log.e("ministorm", "Appcontext id = " + user.getId() + " token = " + user.getToken());
         helper = new LoadingViewController(getLoadingTargetView());
 
         for (int i = 0; i < 50; i++) {
-            mDataList.add(""+i);
+            mDataList.add("" + i);
         }
+
         mAdapter = new DataAdapter(this);
         mAdapter.setData(mDataList);
         mreview.setAdapter(mAdapter);
         mreview.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mpage = Paginate.with(mreview, new Paginate.Callbacks() {
-            @Override
-            public void onLoadMore() {
-                mToolbar.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < 50; i++) {
-                            a++;
-                            mDataList.add(""+ a);
-                        }
-                        if (a > 200) {
-                            mpage.setFooterState(State.TheEnd);
-                        } else {
-                            mpage.setFooterState(State.Normal);
-                        }
-                    }
-                }, 2000);
-
-            }
-
-            @Override
-            public void onRetry() {
-
-            }
-        });
     }
 
     @Override
@@ -134,7 +112,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_main;
+        return R.layout.act_main;
     }
 
     @Override
@@ -273,11 +251,11 @@ public class MainActivity extends BaseActivity
 
         @BindView(R.id.error)
         TextView error;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
 
     public Bitmap decode(Resources resources, int resId, int width, int height) {

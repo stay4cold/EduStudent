@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+
+    </style>
+
+    <style name="CustomToolbar" parent="Widget.AppCompat.Toolbar">
+
+    </style>
+
+    <style name="CustomSearchViewWithNoSearchIcon" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@null</item>
+        <item name="searchHintIcon">@null</item>
+    </style>
+</resources>
