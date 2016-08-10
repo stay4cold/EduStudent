@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+              android:background="?attr/selectableItemBackground"
+              android:clickable="true"
+              android:orientation="horizontal"
+              android:padding="10dp">
+
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/class_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <com.suggee.edustudent.widgets.LabelView
+            android:id="@+id/class_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundColor="?attr/colorAccent"
+            app:direction="leftTop"
+            app:labelBottomPadding="6dp"
+            app:labelTopPadding="14dp"
+            app:text="未审核"
+            app:textSize="12sp"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="班级名称"
+            android:textColor="@color/text_color_content_main"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/class_num"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_class_num"
+            android:drawableStart="@drawable/ic_class_num"
+            android:gravity="center_vertical"
+            android:text="班级人数"
+            android:textColor="@color/text_color_content_submain"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/class_team"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_class_team"
+            android:drawableStart="@drawable/ic_class_team"
+            android:gravity="center_vertical"
+            android:text="班级所属"
+            android:textColor="@color/text_color_content_submain"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+</LinearLayout>

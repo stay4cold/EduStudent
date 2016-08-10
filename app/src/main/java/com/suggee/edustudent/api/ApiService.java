@@ -1,9 +1,16 @@
 package com.suggee.edustudent.api;
 
 import com.suggee.edustudent.bean.BaseResponse;
+import com.suggee.edustudent.bean.ClassDetailBean;
+import com.suggee.edustudent.bean.Classes;
+import com.suggee.edustudent.bean.Course;
+import com.suggee.edustudent.bean.CourseFilterGrade;
+import com.suggee.edustudent.bean.CourseFilterSubject;
 import com.suggee.edustudent.bean.OauthUser;
+import com.suggee.edustudent.bean.SearchResult;
 import com.suggee.edustudent.bean.User;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -15,6 +22,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -93,4 +102,32 @@ public interface ApiService {
     @POST("user/collect/class")
     Observable<BaseResponse<String>> collectClass(@Field("action") String action, @Field("c_id") String classId);
 
+    //获取我的班级列表,注意page是从1开始计算，perpage默认为15
+    @GET("stu/class/mine")
+    Observable<BaseResponse<List<Classes>>> getClasses(@Query("page") int page, @Query("per_page") int perPage);
+
+    //获取班级详情
+    @GET("stu/class/detail")
+    Observable<BaseResponse<ClassDetailBean>> getClassDetail(@Query("id") String classId);
+
+    //加入班级
+    @FormUrlEncoded
+    @POST("stu/class/join")//"cid"和"invest_code"任传一个
+    Observable<BaseResponse<String>> joinClass(@FieldMap Map<String, Integer> params);
+
+    //公开课列表
+    @GET("stu/ocourse")
+    Observable<BaseResponse<List<Course>>> getCourse(@QueryMap Map<String, String> options);
+
+    //获取公开课筛选年级条件
+    @GET("grades")
+    Observable<BaseResponse<List<CourseFilterGrade>>> getCourseFilterGrade();
+
+    //获取公开课筛选科目条件
+    @GET("subjects")
+    Observable<BaseResponse<List<CourseFilterSubject>>> getCourseFilterSubject();
+
+    //搜索
+    @GET("stu/ocourse/search")
+    Observable<BaseResponse<SearchResult>> getSearchResult(@Query("word") String words);
 }

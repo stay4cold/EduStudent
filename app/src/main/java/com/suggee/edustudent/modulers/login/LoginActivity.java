@@ -149,7 +149,8 @@ public class LoginActivity extends BaseActivity {
                                          for (OauthUser user : oauthUsers) {
                                              user.setLogined(false);
                                          }
-
+                                         oauthUser.setName(name.getText().toString());
+                                         oauthUser.setPassword(pwd.getText().toString());
                                          oauthUser.setId(oauthUser.getUser().getId());
                                          oauthUser.setLogined(true);
                                          realm.copyToRealmOrUpdate(oauthUser);

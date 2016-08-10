@@ -1,5 +1,6 @@
 package com.suggee.edustudent.base.loading;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 
 /**
@@ -13,6 +14,8 @@ public interface ILoadingView {
     void restoreView();
 
     void showLayout(View view, View.OnClickListener listener);
+
+    void showLayout(@LayoutRes int layoutId, View.OnClickListener listener);
 
     View inflate(int layoutId);
 }

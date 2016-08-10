@@ -29,7 +29,6 @@ public class ApiClient {
 
     private Retrofit mRetrofit;
     private ApiService mApiService;
-    private OauthUser mOauthUser;
 
     private ApiClient() {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -57,11 +56,6 @@ public class ApiClient {
                 .build();
 
         mApiService = mRetrofit.create(ApiService.class);
-
-        mOauthUser = Realm.getDefaultInstance()
-                          .where(OauthUser.class)
-                          .equalTo("logined", true)
-                          .findFirst();
     }
 
     private static class SingletonHolder {
@@ -94,9 +88,8 @@ public class ApiClient {
                                   .where(OauthUser.class)
                                   .equalTo("logined", true)
                                   .findFirst();
-
             Request author = originalRequest.newBuilder()
-                                            .header("token", user != null ? user.getToken() : "")
+                                            .header("Authorization", "Bearer:" + (user != null ? user.getToken() : ""))
                                             .header("random", random)
                                             .header("sign", MD5Coder.getMD5Code(random + Api.KEY))
                                             .build();

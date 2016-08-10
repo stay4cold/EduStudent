@@ -1,8 +1,9 @@
 package com.suggee.edustudent.modulers.search;
 
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 
 import com.github.pwittchen.reactivenetwork.library.ConnectivityStatus;
 import com.suggee.edustudent.R;
@@ -18,11 +19,14 @@ import butterknife.BindView;
  */
 public class SearchFragment extends BaseFragment {
 
-
-    @BindView(R.id.toolbar)
+    @BindView(R.id.search_icon)
+    AppCompatImageView mSearchIcon;
+    @BindView(R.id.search)
+    EditText mSearch;
+    @BindView(R.id.search_clear)
+    AppCompatImageView mSearchClear;
+    @BindView(R.id.common_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.search_view)
-    SearchView mSearchView;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -44,7 +48,6 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.frag_search;
+        return R.layout.act_search;
     }
-
 }

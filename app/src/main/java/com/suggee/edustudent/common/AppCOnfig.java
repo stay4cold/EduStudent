@@ -9,4 +9,7 @@ package com.suggee.edustudent.common;
 public class AppConfig {
     public static final boolean DEBUG = true;
 
+    //分页加载中每一页的请求数目
+    public static final int PER_PAGE = 30;
+
 }

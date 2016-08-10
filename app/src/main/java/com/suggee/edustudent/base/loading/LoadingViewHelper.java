@@ -1,5 +1,6 @@
 package com.suggee.edustudent.base.loading;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,11 @@ public class LoadingViewHelper implements ILoadingView {
                 view.setOnClickListener(listener);
             }
         }
+    }
+
+    @Override
+    public void showLayout(@LayoutRes int layoutId, View.OnClickListener listener) {
+        showLayout(inflate(layoutId), listener);
     }
 
     @Override

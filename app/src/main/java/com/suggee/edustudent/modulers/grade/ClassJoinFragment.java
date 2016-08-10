@@ -1,27 +1,17 @@
-package com.suggee.edustudent.modulers.course;
+package com.suggee.edustudent.modulers.grade;
 
 import android.os.Bundle;
 
 import com.github.pwittchen.reactivenetwork.library.ConnectivityStatus;
-import com.suggee.edustudent.R;
-import com.suggee.edustudent.base.ui.fragment.BaseLazyFragment;
+import com.suggee.edustudent.base.ui.fragment.BaseFragment;
 
 /**
  * Author:  wangchenghao
  * Email:   wangchenghao1987@gmail.com
- * Date:    16/8/1
+ * Date:    16/8/5
  * Description:
  */
-public class CourseContainerFragment extends BaseLazyFragment {
-
-    public static CourseContainerFragment newInstance() {
-        return new CourseContainerFragment();
-    }
-
-    @Override
-    protected void lazyLoad() {
-
-    }
+public class ClassJoinFragment extends BaseFragment {
 
     @Override
     protected void initViewsAndEvents(Bundle savedInstanceState) {
@@ -40,6 +30,6 @@ public class CourseContainerFragment extends BaseLazyFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.frag_course_container;
+        return 0;
     }
 }

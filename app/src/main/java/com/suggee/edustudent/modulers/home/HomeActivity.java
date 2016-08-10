@@ -11,7 +11,7 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 import com.suggee.edustudent.R;
 import com.suggee.edustudent.base.ui.activity.BaseActivity;
-import com.suggee.edustudent.modulers.course.CourseContainerFragment;
+import com.suggee.edustudent.modulers.course.CourseFragment;
 import com.suggee.edustudent.modulers.grade.GradeContainerFragment;
 import com.suggee.edustudent.modulers.profile.ProfileFragment;
 import com.suggee.edustudent.widgets.HackViewPager;
@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity {
                     case 0:
                         return GradeContainerFragment.newInstance();
                     case 1:
-                        return CourseContainerFragment.newInstance();
+                        return CourseFragment.newInstance();
                     case 2:
                         return ProfileFragment.newInstance();
                     default:
