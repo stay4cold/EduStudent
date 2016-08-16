@@ -3,6 +3,8 @@ package com.suggee.edustudent.common;
 import com.suggee.edustudent.bean.OauthUser;
 import com.suggee.edustudent.bean.User;
 
+import io.realm.Realm;
+
 /**
  * Author:  wangchenghao
  * Email:   wangchenghao123@126.com
@@ -20,11 +22,12 @@ public final class AppContext {
 
     }
 
-    public static void setOauthUser(OauthUser oauthUser) {
-        sOauthUser = oauthUser;
-    }
-
     public static OauthUser getOauthUser() {
+        if (sOauthUser == null) {
+            Realm realm = Realm.getDefaultInstance();
+            sOauthUser = realm.where(OauthUser.class).equalTo("logined", true).findFirst();
+
+        }
         return sOauthUser;
     }
 

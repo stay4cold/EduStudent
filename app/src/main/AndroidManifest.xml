@@ -50,6 +50,10 @@
         <activity android:name=".base.ui.activity.FragmentContainerActivity"/>
 
         <activity android:name=".modulers.grade.ClassDetailActivity"/>
+
+        <activity android:name=".modulers.homepage.TeacherHomepageActivity"/>
+
+        <activity android:name=".modulers.login.OptimizeDataActivity"/>
     </application>
 
 </manifest>

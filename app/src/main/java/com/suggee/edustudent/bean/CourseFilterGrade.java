@@ -1,12 +1,15 @@
 package com.suggee.edustudent.bean;
 
+import java.io.Serializable;
+
 /**
  * Author:  wangchenghao
  * Email:   wangchenghao1987@gmail.com
  * Date:    16/8/4
  * Description:
  */
-public class CourseFilterGrade {
+public class CourseFilterGrade implements Serializable {
+    private static final long serialVersionUID = 4287378307011094491L;
     private String id;//年级id
     private String name;//年级名称
 

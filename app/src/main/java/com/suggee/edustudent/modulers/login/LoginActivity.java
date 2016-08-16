@@ -13,10 +13,10 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.suggee.edustudent.R;
 import com.suggee.edustudent.api.ApiClient;
+import com.suggee.edustudent.api.ApiException;
 import com.suggee.edustudent.base.ui.activity.BaseActivity;
 import com.suggee.edustudent.bean.BaseResponse;
 import com.suggee.edustudent.bean.OauthUser;
-import com.suggee.edustudent.modulers.home.HomeActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -123,18 +123,18 @@ public class LoginActivity extends BaseActivity {
     //登陆
     @OnClick(R.id.login)
     public void login() {
+        final String userName = name.getText().toString();
+        final String userPwd = pwd.getText().toString();
+
         addSubscription(ApiClient.getApiService()
-                                 .login(name.getText().toString(),
-                                         pwd.getText().toString(),
-                                         "1")
+                                 .login(userName, userPwd,"1")
                                  .flatMap(new Func1<BaseResponse<OauthUser>, Observable<OauthUser>>() {
                                      @Override
                                      public Observable<OauthUser> call(final BaseResponse<OauthUser> oauthUserBaseResponse) {
                                          if (oauthUserBaseResponse.getCode() == 2000) {
                                              return Observable.just(oauthUserBaseResponse.getData());
                                          } else {
-                                             return Observable.error(new Throwable(oauthUserBaseResponse
-                                                     .getMsg()));
+                                             return Observable.error(new ApiException(oauthUserBaseResponse));
                                          }
                                      }
                                  })
@@ -149,12 +149,13 @@ public class LoginActivity extends BaseActivity {
                                          for (OauthUser user : oauthUsers) {
                                              user.setLogined(false);
                                          }
-                                         oauthUser.setName(name.getText().toString());
-                                         oauthUser.setPassword(pwd.getText().toString());
+                                         oauthUser.setName(userName);
+                                         oauthUser.setPassword(userPwd);
                                          oauthUser.setId(oauthUser.getUser().getId());
                                          oauthUser.setLogined(true);
                                          realm.copyToRealmOrUpdate(oauthUser);
                                          realm.commitTransaction();
+                                         realm.close();
                                      }
                                  })
                                  .subscribeOn(Schedulers.io())
@@ -171,7 +172,7 @@ public class LoginActivity extends BaseActivity {
 
                                                 @Override
                                                 public void onNext(OauthUser oauthUser) {
-                                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                                    startActivity(new Intent(LoginActivity.this, OptimizeDataActivity.class));
                                                     finish();
                                                 }
                                             }

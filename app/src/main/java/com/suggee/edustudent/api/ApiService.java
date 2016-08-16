@@ -130,4 +130,16 @@ public interface ApiService {
     //搜索
     @GET("stu/ocourse/search")
     Observable<BaseResponse<SearchResult>> getSearchResult(@Query("word") String words);
+
+    //获取教师热门公开课
+    @GET("stu/teacher/ocourse/hot")
+    Observable<String> getCourseHot(@Query("uid") int teaId, @Query("page") int page, @Query("per_page") int perPage);
+
+    //获取教师热门班级
+    @GET("stu/teacher/class/hot")
+    Observable<String> getClassHot(@Query("uid") int teaId, @Query("page") int page, @Query("per_page") int perPage);
+
+    //获取教师详情
+    @GET("stu/teacher/detail")
+    Observable<String> getTeaDetail(@Query("uid") int teaId);
 }

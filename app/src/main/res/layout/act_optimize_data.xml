@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground">
+
+    <include
+        android:id="@+id/common_toolbar"
+        layout="@layout/cm_toolbar"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/common_toolbar"
+        android:layout_marginTop="38dp"
+        android:paddingLeft="10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/nick"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:hint="昵称"
+            android:textSize="14sp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_below="@id/input"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="昵称将用于显示在教师的班级成员列表和公开课评论中，建议您填写真实姓名"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:id="@+id/gender_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/state"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="性别"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_right_black_24dp"
+            android:gravity="center_vertical"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/school_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gender_container"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="学校"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/school"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_right_black_24dp"
+            android:gravity="center_vertical"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/grade_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/school_container"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="年级"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/grade"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_right_black_24dp"
+            android:gravity="center_vertical|end"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/grade_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="?attr/colorPrimary"
+        android:text="完成"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"/>
+</RelativeLayout>

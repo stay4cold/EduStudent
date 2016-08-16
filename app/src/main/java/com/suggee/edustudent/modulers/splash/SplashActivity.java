@@ -48,6 +48,7 @@ public class SplashActivity extends BaseActivity {
                                           gotoNextActivity();
                                       }
                                   }));
+
     }
 
     @Override
@@ -62,69 +63,69 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoNextActivity() {
         if (AppContext.getOauthUser() == null) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
             //调用登陆接口，自动登陆
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            login();
         }
     }
 
     private void login() {
-        OauthUser user = Realm.getDefaultInstance().where(OauthUser.class).equalTo("logined", true).findFirst();
-        if (user != null) {
-            addSubscription(ApiClient.getApiService()
-                                     .login(user.getName(), user.getPassword(), "1")
-                                     .flatMap(new Func1<BaseResponse<OauthUser>, Observable<OauthUser>>() {
-                                         @Override
-                                         public Observable<OauthUser> call(BaseResponse<OauthUser> oauthUserBaseResponse) {
-                                             if (oauthUserBaseResponse.getCode() == 2000) {
-                                                 return Observable.just(oauthUserBaseResponse.getData());
-                                             } else {
-                                                 return Observable.error(new ApiException(oauthUserBaseResponse));
-                                             }
+        final String name = AppContext.getOauthUser().getName();
+        final String pwd = AppContext.getOauthUser().getPassword();
+        addSubscription(ApiClient.getApiService()
+                                 .login(name, pwd, "1")
+                                 .flatMap(new Func1<BaseResponse<OauthUser>, Observable<OauthUser>>() {
+                                     @Override
+                                     public Observable<OauthUser> call(BaseResponse<OauthUser> oauthUserBaseResponse) {
+                                         if (oauthUserBaseResponse.getCode() == 2000) {
+                                             return Observable.just(oauthUserBaseResponse.getData());
+                                         } else {
+                                             return Observable.error(new ApiException(oauthUserBaseResponse));
                                          }
-                                     })
-                                     .doOnNext(new Action1<OauthUser>() {
-                                         @Override
-                                         public void call(OauthUser oauthUser) {
-                                             Realm realm = Realm.getDefaultInstance();
-                                             realm.beginTransaction();
-                                             RealmResults<OauthUser> oauthUsers = realm.where(OauthUser.class)
-                                                                                       .equalTo("logined", true)
-                                                                                       .findAll();
-                                             for (OauthUser user : oauthUsers) {
-                                                 user.setLogined(false);
-                                             }
-
-                                             oauthUser.setId(oauthUser.getUser().getId());
-                                             oauthUser.setLogined(true);
-                                             realm.copyToRealmOrUpdate(oauthUser);
-                                             realm.commitTransaction();
+                                     }
+                                 })
+                                 .doOnNext(new Action1<OauthUser>() {
+                                     @Override
+                                     public void call(OauthUser oauthUser) {
+                                         Realm realm = Realm.getDefaultInstance();
+                                         realm.beginTransaction();
+                                         RealmResults<OauthUser> oauthUsers = realm.where(OauthUser.class)
+                                                                                   .equalTo("logined", true)
+                                                                                   .findAll();
+                                         for (OauthUser user : oauthUsers) {
+                                             user.setLogined(false);
                                          }
-                                     })
-                                     .subscribeOn(Schedulers.io())
-                                     .observeOn(AndroidSchedulers.mainThread())
-                                     .subscribe(new Subscriber<OauthUser>() {
-                                                    @Override
-                                                    public void onCompleted() {
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-                                                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                                                        finish();
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(OauthUser oauthUser) {
-                                                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-                                                        finish();
-                                                    }
+                                         oauthUser.setName(name);
+                                         oauthUser.setPassword(pwd);
+                                         oauthUser.setId(oauthUser.getUser().getId());
+                                         oauthUser.setLogined(true);
+                                         realm.copyToRealmOrUpdate(oauthUser);
+                                         realm.commitTransaction();
+                                         realm.close();
+                                     }
+                                 })
+                                 .subscribeOn(Schedulers.io())
+                                 .observeOn(AndroidSchedulers.mainThread())
+                                 .subscribe(new Subscriber<OauthUser>() {
+                                                @Override
+                                                public void onCompleted() {
                                                 }
-                                     )
-            );
-        }
+
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                                                    finish();
+                                                }
+
+                                                @Override
+                                                public void onNext(OauthUser oauthUser) {
+                                                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                                                    finish();
+                                                }
+                                            }
+                                 )
+        );
     }
 }

@@ -82,18 +82,18 @@ public class ApiClient {
             //需要在此动态获取是因为即使使用static来定义token，也有可能被回收，所以需要在回收的时候到DB中
             //获取
             //由于此处所处的线程不确定，而Realm不能跨线程访问，所以每次都需要从Realm中重新取OauthUser,
-            //不过速度很快，在几个ms之内，后期可以优化，暂时没有想到更好的办法
-
-            OauthUser user = Realm.getDefaultInstance()
-                                  .where(OauthUser.class)
+            //不过速度很快，在几个ms之内，而且一般都在ios线程，不会阻塞UI线程，后期可以优化，暂时没有想到更好的办法
+            Realm realm = Realm.getDefaultInstance();
+            OauthUser user = realm.where(OauthUser.class)
                                   .equalTo("logined", true)
                                   .findFirst();
             Request author = originalRequest.newBuilder()
-                                            .header("Authorization", "Bearer:" + (user != null ? user.getToken() : ""))
+                                            .header("Authorization", "Bearer:" + (user != null ? user
+                                                    .getToken() : ""))
                                             .header("random", random)
                                             .header("sign", MD5Coder.getMD5Code(random + Api.KEY))
                                             .build();
-
+            realm.close();
             return chain.proceed(author);
         }
     };

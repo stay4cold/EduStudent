@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/transparent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/boy"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:text="男"/>
+
+    <TextView
+        android:id="@+id/girl"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="女"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="取消"/>
+</LinearLayout>

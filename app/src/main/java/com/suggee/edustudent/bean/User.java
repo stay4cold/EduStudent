@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Date:    16/7/22
  * Description:
  */
-public class User extends RealmObject{
+public class User extends RealmObject {
 
     /**
      * avatar :
@@ -32,14 +32,19 @@ public class User extends RealmObject{
 
     private String avatar;  //用户头像
     private String brief;   //用户简介
+    @SerializedName("grade_id")
+    private int gradeId;//年级id
+    @SerializedName("grade_name")
+    private String gradeName;//年级名称
     private String level;
     private String mobile;
 
     @SerializedName("nick_name")
     private String nickName;
     private String sex;
-    private int sid;
-    private String token;
+    @SerializedName("school_name")
+    private String schoolName;//学校名
+    private int sid;//学校id
     private String type;    //1->学生 2->老师
 
     @SerializedName("user_name")
@@ -101,14 +106,6 @@ public class User extends RealmObject{
         this.sid = sid;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getType() {
         return type;
     }
@@ -131,5 +128,29 @@ public class User extends RealmObject{
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(int gradeId) {
+        this.gradeId = gradeId;
+    }
+
+    public String getGradeName() {
+        return gradeName;
+    }
+
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }

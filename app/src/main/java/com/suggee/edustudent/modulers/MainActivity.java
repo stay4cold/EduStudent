@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,6 @@ import com.suggee.edustudent.R;
 import com.suggee.edustudent.base.loading.LoadingViewController;
 import com.suggee.edustudent.base.rx.RxBus;
 import com.suggee.edustudent.base.ui.activity.BaseActivity;
-import com.suggee.edustudent.bean.OauthUser;
 import com.suggee.edustudent.event.NetChangedEvent;
 
 import java.io.File;
@@ -37,7 +35,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity
@@ -64,8 +61,6 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OauthUser user = Realm.getDefaultInstance().where(OauthUser.class).equalTo("logined", true).findFirst();
-        Log.e("ministorm", "Appcontext id = " + user.getId() + " token = " + user.getToken());
         helper = new LoadingViewController(getLoadingTargetView());
 
         for (int i = 0; i < 50; i++) {

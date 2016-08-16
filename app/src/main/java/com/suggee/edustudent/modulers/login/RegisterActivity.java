@@ -16,11 +16,11 @@ import com.suggee.edustudent.api.ApiException;
 import com.suggee.edustudent.base.ui.activity.BaseActivity;
 import com.suggee.edustudent.bean.BaseResponse;
 import com.suggee.edustudent.bean.OauthUser;
-import com.suggee.edustudent.common.AppContext;
-import com.suggee.edustudent.modulers.MainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -130,11 +130,12 @@ public class RegisterActivity extends BaseActivity {
     @OnClick(R.id.register)
     public void register() {
         register.setEnabled(false);
+        final String name = phone.getText().toString();
+        final String passwd = pwd.getText().toString();
+        final String vCode = code.getText().toString();
+
         addSubscription(ApiClient.getApiService()
-                                 .register(phone.getText().toString(),
-                                         pwd.getText().toString(),
-                                         "1",
-                                         code.getText().toString())
+                                 .register(name, passwd, "1", vCode)
                                  .flatMap(new Func1<BaseResponse<OauthUser>, Observable<OauthUser>>() {
                                      @Override
                                      public Observable<OauthUser> call(BaseResponse<OauthUser> response) {
@@ -148,7 +149,21 @@ public class RegisterActivity extends BaseActivity {
                                  .doOnNext(new Action1<OauthUser>() {
                                      @Override
                                      public void call(OauthUser oauthUser) {
-                                         AppContext.setOauthUser(oauthUser);
+                                         Realm realm = Realm.getDefaultInstance();
+                                         realm.beginTransaction();
+                                         RealmResults<OauthUser> oauthUsers = realm.where(OauthUser.class)
+                                                                                   .equalTo("logined", true)
+                                                                                   .findAll();
+                                         for (OauthUser user : oauthUsers) {
+                                             user.setLogined(false);
+                                         }
+                                         oauthUser.setName(name);
+                                         oauthUser.setPassword(passwd);
+                                         oauthUser.setId(oauthUser.getUser().getId());
+                                         oauthUser.setLogined(true);
+                                         realm.copyToRealmOrUpdate(oauthUser);
+                                         realm.commitTransaction();
+                                         realm.close();
                                      }
                                  })
                                  .subscribeOn(Schedulers.io())
@@ -156,7 +171,7 @@ public class RegisterActivity extends BaseActivity {
                                  .subscribe(new Action1<OauthUser>() {
                                      @Override
                                      public void call(OauthUser oauthUser) {
-                                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                         startActivity(new Intent(RegisterActivity.this, OptimizeDataActivity.class));
                                          finish();
                                      }
                                  }, new Action1<Throwable>() {
