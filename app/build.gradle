@@ -30,7 +30,6 @@ ext {
     rxJavaVersion = "1.1.6"
     rxBindingVersion = "0.4.0"
     butterknifeVersion = "8.1.0"
-
 }
 
 dependencies {
@@ -71,7 +70,7 @@ dependencies {
     compile "com.github.castorflex.smoothprogressbar:library:1.1.0"
     compile "com.github.castorflex.smoothprogressbar:library-circular:1.2.0"
 
-    compile 'com.github.stay4cold:okrecyclerview:1.0.2'
+    compile 'com.github.stay4cold:okrecyclerview:1.0.3'
 
     compile 'cn.finalteam:toolsfinal:1.1.5'
 
